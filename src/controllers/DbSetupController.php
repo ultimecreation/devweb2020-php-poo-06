@@ -50,6 +50,7 @@ class DbSetupController extends Controller
             $query = $bdd->query("
                 CREATE TABLE IF NOT EXISTS users(
                     id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                    username VARCHAR(255) NOT NULL,
                     email VARCHAR(255) NOT NULL COMMENT 'email utilisateur',
                     password VARCHAR(255) NOT NULL COMMENT 'mot de passe'                   
                 )ENGINE=InnoDB;
@@ -129,7 +130,27 @@ class DbSetupController extends Controller
                 )ENGINE=InnoDB;
             ");
             $res = $query->execute();
+            
+            $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS buildings(
+                    id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    description VARCHAR(255) NOT NULL,
+                    img VARCHAR(255) NOT NULL
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
 
+            $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS farm_buildings(
+                    farm_id INT(11)  NOT NULL,
+                    building_id INT(11)  NOT NULL,
+                    FOREIGN KEY (farm_id) REFERENCES farms(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+                    FOREIGN KEY (building_id) REFERENCES buildings(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+                    PRIMARY KEY(farm_id,building_id)
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
             debug($res);
         }
     
