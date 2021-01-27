@@ -35,7 +35,7 @@ class UserDashboardController extends Controller{
             $this->getModel('UserModel')->update($user);
                 
             $updatedUser = $this->getModel('UserModel')->getUserById(getUserData('id'));
-            unset($updatedUser->password);
+            //unset($updatedUser->password);
             setUserData($updatedUser);
             setFlashMessage('success',"Modification enregistrée");
             return redirectTo('/mon-compte');

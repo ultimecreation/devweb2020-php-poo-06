@@ -86,14 +86,24 @@ class DbSetupController extends Controller
             $res = $query->execute();
 
             $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS animal_status(
+                    id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                    name VARCHAR(255) NOT NULL
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
+
+            $query = $bdd->query("
                 CREATE TABLE IF NOT EXISTS animals(
                     id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
                     type_id INT(11) NOT NULL,
+                    animal_status_id INT(11) NOT NULL,
                     name VARCHAR(255) NOT NULL,
                     hunger_level INT(11) NOT NULL,
                     thirst_level INT(11) NOT NULL,
                     global_health INT(11),
-                    FOREIGN KEY (type_id) REFERENCES animal_types(id) ON UPDATE CASCADE ON DELETE RESTRICT
+                    FOREIGN KEY (type_id) REFERENCES animal_types(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+                    FOREIGN KEY (animal_status_id) REFERENCES animal_status(id) ON UPDATE CASCADE ON DELETE RESTRICT
                 )ENGINE=InnoDB;
             ");
             $res = $query->execute();

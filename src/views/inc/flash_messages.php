@@ -1,6 +1,6 @@
 <?php if(isset($_SESSION['flash'])):?>
     <?php foreach($_SESSION['flash'] as $type=> $message):?>
-        <div class="alert-<?php echo $type;?>">
+        <div class="alert alert-<?php echo $type;?> text-center">
             <?php echo $message;?>
         </div>
     <?php endforeach;?>

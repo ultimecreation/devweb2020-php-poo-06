@@ -11,8 +11,20 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Accueil</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Adoption</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Ressources
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="<?php echo siteUrl('/animaux');?>">Animaux</a>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/aliments');?>">Aliments</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/batiments');?>">Batiments</a>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/consommables');?>">Consommables</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/mon-compte');?>">Tableau de bord</a>
+                        
+                    </div>
                 </li>
             </ul>
            
@@ -23,13 +35,22 @@
             <ul class="navbar-nav">
             <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Mon Compte
+                        <?php 
+                            echo !isUserLogged() 
+                                ? 'Mon Compte' 
+                                : "Bienvenue ".getUserData('username');
+
+                        ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="<?php echo siteUrl('/inscription');?>">Inscription</a>
-                        <a class="dropdown-item" href="<?php echo siteUrl('/connexion');?>">Connexion</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Tableau de bord</a>
+                        <?php if(!isUserLogged()):?>
+                            <a class="dropdown-item" href="<?php echo siteUrl('/inscription');?>">Inscription</a>
+                            <a class="dropdown-item" href="<?php echo siteUrl('/connexion');?>">Connexion</a>
+                        <?php else :?>
+                            <a class="dropdown-item" href="<?php echo siteUrl('/deconnexion');?>">Déconnexion</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="<?php echo siteUrl('/mon-compte');?>">Tableau de bord</a>
+                        <?php endif;?>
                     </div>
                 </li>
             </ul>

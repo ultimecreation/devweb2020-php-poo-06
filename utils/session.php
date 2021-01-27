@@ -8,7 +8,7 @@ function setUserData($data)
 function getUserData($data = null)
 {
     if (!$data) return $_SESSION['user_logged'];
-    if ($data) return $_SESSION['user_logged'][$data];
+    else if ($data) return $_SESSION['user_logged'][$data];
     else return "no user connected";
 }
 function isUserLogged()

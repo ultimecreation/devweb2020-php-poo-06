@@ -21,9 +21,18 @@ class Routes
 
             array('url' => '/admin', 'goto' =>  array('AdminHomeController', 'index')),
             array('url' => '/db-setup', 'goto' =>  array('DbSetupController', 'index')),
+
+            array('url' => '/animaux', 'goto' =>  array('AnimalsController', 'list')),
+            array('url' => '/aliments', 'goto' =>  array('FoodsController', 'list')),
+            array('url' => '/batiments', 'goto' =>  array('BuildingsController', 'list')),
+            array('url' => '/consommables', 'goto' =>  array('ConsumablesController', 'list')),
+
+            array('url' => '/mon-compte', 'goto' =>  array('UserDashboardController', 'index')),
+            array('url' => '/modifier-mes-informations', 'goto' =>  array('UserDashboardController', 'edit')),
           
             array('url' => '/inscription', 'goto' =>  array('AuthController', 'register')),
             array('url' => '/connexion', 'goto' =>  array('AuthController', 'login')),
+            array('url' => '/deconnexion', 'goto' =>  array('AuthController', 'logout')),
 
             array('url' => '/', 'goto' =>  array('HomeController', 'index')),
         ];

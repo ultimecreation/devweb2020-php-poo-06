@@ -2,7 +2,8 @@
 
 class AuthModel extends Model{
 
-    public function save($user){
+    public function save($user)
+    {
         try{
             $this->bdd->beginTransaction();
 
@@ -32,11 +33,33 @@ class AuthModel extends Model{
                     return true;
                 }
             }
-
-        }catch(Exception $e){
-            $this->bdd->rollback();
         }
-        
+        catch(Exception $e)
+        {
+            $this->bdd->rollback();
+            echo $e->getMessage();
+        }
+    }
 
+    public function isUsernameTaken($username){
+        $req = $this->bdd->prepare("SELECT * FROM users WHERE username=?");
+        $req->execute(array($username));
+        $res = $req->fetch();
+        if($res) return true;
+        return false;
+    }
+
+    public function isEmailTaken($email){
+        $req = $this->bdd->prepare("SELECT * FROM users WHERE email=?");
+        $req->execute(array($email));
+        $res = $req->fetch();
+        if($res) return true;
+        return false;
+    }
+
+    public function getUserByEmail($email){
+        $req = $this->bdd->prepare("SELECT * FROM users WHERE email=?");
+        $req->execute(array($email));
+        return $req->fetch();
     }
 }
