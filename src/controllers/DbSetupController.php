@@ -99,6 +99,7 @@ class DbSetupController extends Controller
                     type_id INT(11) NOT NULL,
                     animal_status_id INT(11) NOT NULL,
                     name VARCHAR(255) NOT NULL,
+                    img VARCHAR(255) NOT NULL DEFAULT 'default.png',
                     hunger_level INT(11) NOT NULL,
                     thirst_level INT(11) NOT NULL,
                     global_health INT(11),
@@ -161,6 +162,28 @@ class DbSetupController extends Controller
                 )ENGINE=InnoDB;
             ");
             $res = $query->execute();
+
+            $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS technics(
+                    id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    description VARCHAR(255) NOT NULL,
+                    img VARCHAR(255) NOT NULL
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
+
+            $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS farm_technics(
+                    farm_id INT(11) NOT NULL,
+                    technic_id INT(11) NOT NULL,
+                    FOREIGN KEY (farm_id) REFERENCES farms(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+                    FOREIGN KEY (technic_id) REFERENCES technics(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+                    PRIMARY KEY(farm_id,technic_id)
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
+
             debug($res);
         }
     

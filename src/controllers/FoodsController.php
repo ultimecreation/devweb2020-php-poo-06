@@ -2,6 +2,7 @@
 
 class FoodsController extends Controller{
     public function list(){
-        return $this->renderView("foods/list");
+        $data['foods'] = $this->getModel('FoodModel')->getAll();
+        return $this->renderView("foods/list",$data);
     }
 }

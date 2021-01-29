@@ -2,6 +2,7 @@
 
 class BuildingsController extends Controller{
     public function list(){
-        return $this->renderView("buildings/list");
+        $data['buildings'] = $this->getModel('BuildingModel')->getAll();
+        return $this->renderView("buildings/list",$data);
     }
 }

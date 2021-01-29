@@ -10,7 +10,7 @@
                 <div class="card m-3">
                     <div class="card-body mx-auto">
                         <figure>
-                            <img src="<?php echo publicUrl("/uploads/animals/default.jpg");?>" alt="" class="img-fluid">
+                            <img src="<?php echo publicUrl("/uploads/animals/{$animal->img}");?>" alt="" class="img-fluid">
                             <figcaption>
                                 <p class="mt-3"><?php echo $animal->name;?></p>
                             </figcaption>
