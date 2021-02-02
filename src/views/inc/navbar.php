@@ -16,14 +16,13 @@
                       Ressources
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="<?php echo siteUrl('/animaux');?>">Animaux</a>
-                        <a class="dropdown-item" href="<?php echo siteUrl('/aliments');?>">Aliments</a>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/techniques');?>">Techniques</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo siteUrl('/batiments');?>">Batiments</a>
                         <a class="dropdown-item" href="<?php echo siteUrl('/consommables');?>">Consommables</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="<?php echo siteUrl('/mon-compte');?>">Tableau de bord</a>
-                        
+                        <a class="dropdown-item" href="<?php echo siteUrl('/animaux');?>">Animaux</a>
+                        <a class="dropdown-item" href="<?php echo siteUrl('/aliments');?>">Aliments</a>
                     </div>
                 </li>
             </ul>

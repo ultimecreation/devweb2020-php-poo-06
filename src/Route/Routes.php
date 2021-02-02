@@ -26,6 +26,7 @@ class Routes
             array('url' => '/aliments', 'goto' =>  array('FoodsController', 'list')),
             array('url' => '/batiments', 'goto' =>  array('BuildingsController', 'list')),
             array('url' => '/consommables', 'goto' =>  array('ConsumablesController', 'list')),
+            array('url' => '/techniques', 'goto' =>  array('TechnicsController', 'list')),
 
             array('url' => '/mon-compte', 'goto' =>  array('UserDashboardController', 'index')),
             array('url' => '/modifier-mes-informations', 'goto' =>  array('UserDashboardController', 'edit')),
