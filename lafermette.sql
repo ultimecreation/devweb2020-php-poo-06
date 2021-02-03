@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 02 fév. 2021 à 19:06
--- Version du serveur :  10.4.14-MariaDB
--- Version de PHP : 7.4.11
+-- Généré le : mer. 03 fév. 2021 à 16:04
+-- Version du serveur :  10.4.13-MariaDB
+-- Version de PHP : 7.4.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -123,6 +123,7 @@ INSERT INTO `animal_types` (`id`, `name`) VALUES
 
 CREATE TABLE `buildings` (
   `id` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `img` varchar(255) NOT NULL
@@ -132,11 +133,11 @@ CREATE TABLE `buildings` (
 -- Déchargement des données de la table `buildings`
 --
 
-INSERT INTO `buildings` (`id`, `name`, `description`, `img`) VALUES
-(1, 'Étable', 'une super étable', 'default.png'),
-(2, 'Hangar', 'un super hangar', 'default.png'),
-(3, 'Poulaillet', 'un super poulaillet', 'default.png'),
-(4, 'Chevrerie', 'une super chevrerie', 'default.png');
+INSERT INTO `buildings` (`id`, `level_id`, `name`, `description`, `img`) VALUES
+(1, 3, 'Étable', 'une super étable', 'default.png'),
+(2, 1, 'Hangar', 'un super hangar', 'default.png'),
+(3, 1, 'Poulaillet', 'un super poulaillet', 'default.png'),
+(4, 2, 'Chevrerie', 'une super chevrerie', 'default.png');
 
 -- --------------------------------------------------------
 
@@ -146,6 +147,7 @@ INSERT INTO `buildings` (`id`, `name`, `description`, `img`) VALUES
 
 CREATE TABLE `farms` (
   `id` int(11) NOT NULL,
+  `level_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `health` tinyint(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -154,8 +156,10 @@ CREATE TABLE `farms` (
 -- Déchargement des données de la table `farms`
 --
 
-INSERT INTO `farms` (`id`, `name`, `health`) VALUES
-(1, 'naser', 100);
+INSERT INTO `farms` (`id`, `level_id`, `name`, `health`) VALUES
+(1, 1, 'nasfarm1', 100),
+(2, 2, 'nasfarm2', 100),
+(3, 1, 'nasfarm3', 100);
 
 -- --------------------------------------------------------
 
@@ -184,7 +188,9 @@ CREATE TABLE `farm_owners` (
 --
 
 INSERT INTO `farm_owners` (`user_id`, `farm_id`) VALUES
-(1, 1);
+(1, 1),
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -219,6 +225,30 @@ INSERT INTO `foods` (`id`, `name`, `img`, `quantity`, `energy`) VALUES
 (1, 'Herbe', 'default.png', 1, 10),
 (2, 'Graine', 'default.png', 1, 5),
 (3, 'Foin', 'default.png', 1, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `levels`
+--
+
+CREATE TABLE `levels` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `timespan` int(3) NOT NULL,
+  `rate` int(3) NOT NULL,
+  `cost` decimal(6,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `levels`
+--
+
+INSERT INTO `levels` (`id`, `name`, `timespan`, `rate`, `cost`) VALUES
+(1, 'starter', 24, 1, '0.00'),
+(2, 'semipro', 12, 2, '500.00'),
+(3, 'pro', 6, 3, '1000.00'),
+(4, 'ultimate', 2, 5, '3000.00');
 
 -- --------------------------------------------------------
 
@@ -303,13 +333,15 @@ ALTER TABLE `animal_types`
 -- Index pour la table `buildings`
 --
 ALTER TABLE `buildings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `level_id` (`level_id`);
 
 --
 -- Index pour la table `farms`
 --
 ALTER TABLE `farms`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `level_id` (`level_id`);
 
 --
 -- Index pour la table `farm_buildings`
@@ -336,6 +368,12 @@ ALTER TABLE `farm_technics`
 -- Index pour la table `foods`
 --
 ALTER TABLE `foods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `levels`
+--
+ALTER TABLE `levels`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -382,13 +420,19 @@ ALTER TABLE `buildings`
 -- AUTO_INCREMENT pour la table `farms`
 --
 ALTER TABLE `farms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `foods`
 --
 ALTER TABLE `foods`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `levels`
+--
+ALTER TABLE `levels`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `technics`
@@ -426,6 +470,18 @@ ALTER TABLE `animal_foods`
 ALTER TABLE `animal_owners`
   ADD CONSTRAINT `animal_owners_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `animal_owners_ibfk_2` FOREIGN KEY (`animal_id`) REFERENCES `animals` (`id`) ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `buildings`
+--
+ALTER TABLE `buildings`
+  ADD CONSTRAINT `buildings_ibfk_1` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
+
+--
+-- Contraintes pour la table `farms`
+--
+ALTER TABLE `farms`
+  ADD CONSTRAINT `farms_ibfk_1` FOREIGN KEY (`level_id`) REFERENCES `levels` (`id`);
 
 --
 -- Contraintes pour la table `farm_buildings`
