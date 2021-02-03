@@ -184,6 +184,17 @@ class DbSetupController extends Controller
             ");
             $res = $query->execute();
 
+            $query = $bdd->query("
+                CREATE TABLE IF NOT EXISTS levels(
+                    id INT(11) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    timespan INT(3) NOT NULL,
+                    rate INT(3) NOT NULL,
+                    cost DECIMAL(6,2) DEFAULT 0
+                )ENGINE=InnoDB;
+            ");
+            $res = $query->execute();
+
             debug($res);
         }
     

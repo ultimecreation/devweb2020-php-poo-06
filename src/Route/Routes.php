@@ -30,6 +30,7 @@ class Routes
 
             array('url' => '/mon-compte', 'goto' =>  array('UserDashboardController', 'index')),
             array('url' => '/modifier-mes-informations', 'goto' =>  array('UserDashboardController', 'edit')),
+            array('url' => '/mes-fermes', 'goto' =>  array('FarmsController', 'getMyFarms')),
           
             array('url' => '/inscription', 'goto' =>  array('AuthController', 'register')),
             array('url' => '/connexion', 'goto' =>  array('AuthController', 'login')),

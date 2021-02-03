@@ -7,7 +7,8 @@ class UserDashboardController extends Controller{
     public function index()
     {
         $data['user'] = $this->getModel('UserModel')->getUserById(getUserData('id'));
-
+        
+        
         return $this->renderView('users/index');
     }
 
